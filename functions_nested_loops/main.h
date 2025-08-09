@@ -2,7 +2,6 @@
 #define MAIN_H
 
 int _putchar(char c);
-void print_alphabet(void);
-void print_alphabet_x10(void);   /* <-- добавь эту строку */
+int _islower(int c); 
 
 #endif /* MAIN_H */
