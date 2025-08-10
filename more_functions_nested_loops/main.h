@@ -2,6 +2,6 @@
 #define MAIN_H
 
 int _putchar(char c);
-void print_square(int size);
+int _isdigit(int c);
 
 #endif /* MAIN_H */
