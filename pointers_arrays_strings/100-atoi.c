@@ -4,24 +4,26 @@
  * _atoi - converts a string to an integer
  * @s: pointer to the string to convert
  *
- * Description: The function handles multiple '+' and '-' signs before
- *              the number, ignores non-digit characters before the number,
- *              and returns 0 if no digits found.
+ * Description:
+ *   Handles multiple '+' and '-' signs before the number,
+ *   stops at first non-digit after digits,
+ *   returns 0 if no digits found,
+ *   properly handles INT_MIN without overflow.
  *
  * Return: the integer converted from the string
  */
 int _atoi(char *s)
 {
-	int i = 0, sign = 1, result = 0, digit_found = 0;
+	int i = 0, sign = 1;
+	unsigned int result = 0;
+	int digit_found = 0;
 
 	while (s[i] != '\0')
 	{
 		if (s[i] == '-')
 			sign *= -1;
 		else if (s[i] == '+')
-		{
-			/* '+' does not change sign */
-		}
+			; /* do nothing */
 		else if (s[i] >= '0' && s[i] <= '9')
 		{
 			digit_found = 1;
@@ -32,5 +34,8 @@ int _atoi(char *s)
 		i++;
 	}
 
-	return (sign * result);
+	if (sign < 0)
+		return (-((int)result));
+	else
+		return ((int)result);
 }
