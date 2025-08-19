@@ -59,7 +59,7 @@ void multiply(char *num1, char *num2)
         result[i + j + 1] += carry;
     }
 
-    // Skip leading zeros
+    /* Skip leading zeros */
     i = 0;
     while (i < len_result && result[i] == 0)
         i++;
