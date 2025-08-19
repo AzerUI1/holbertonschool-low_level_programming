@@ -110,6 +110,13 @@ int main(int argc, char *argv[])
         return (98);
     }
     
+    /* Handle special case: if either number is "0" */
+    if (strcmp(argv[1], "0") == 0 || strcmp(argv[2], "0") == 0)
+    {
+        printf("0\n");
+        return (0);
+    }
+    
     /* Multiply the numbers */
     multiply(argv[1], argv[2]);
     
