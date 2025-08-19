@@ -1,11 +1,10 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * check_palindrome - recursive helper to check palindrome
  * @s: string to check
  * @left: left index
- * @right: right index
+ * @right: right index (computed recursively)
  *
  * Return: 1 if palindrome, 0 if not
  */
@@ -16,6 +15,19 @@ int check_palindrome(char *s, int left, int right)
 	if (s[left] != s[right])
 		return (0);
 	return (check_palindrome(s, left + 1, right - 1));
+}
+
+/**
+ * str_length - computes string length recursively
+ * @s: string
+ *
+ * Return: length of string
+ */
+int str_length(char *s)
+{
+	if (*s == '\0')
+		return (0);
+	return (1 + str_length(s + 1));
 }
 
 /**
@@ -31,7 +43,7 @@ int is_palindrome(char *s)
 	if (!s)
 		return (1);
 
-	length = strlen(s);
+	length = str_length(s);
 
 	if (length == 0)
 		return (1);
