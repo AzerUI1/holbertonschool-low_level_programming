@@ -6,7 +6,7 @@
  * @ac: argument count
  * @av: argument vector
  *
- * Return: pointer to a new string, or NULL if ac == 0, av == NULL, 
+ * Return: pointer to a new string, or NULL if ac == 0, av == NULL,
  * or malloc fails
  */
 char *argstostr(int ac, char **av)
