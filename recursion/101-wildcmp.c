@@ -14,18 +14,19 @@ int wildcmp(char *s1, char *s2)
 
 	if (*s2 == '*')
 	{
-		/* Skip consecutive '*' */
-		while (*(s2 + 1) == '*')
-			s2++;
+		/* Skip multiple '*' recursively */
+		if (*(s2 + 1) == '*')
+			return (wildcmp(s1, s2 + 1));
 
-		/* '*' matches empty string or one/more chars */
-		if (*(s2 + 1) == '\0')
+		/* '*' matches empty string */
+		if (wildcmp(s1, s2 + 1))
 			return (1);
 
+		/* '*' matches first char of s1 */
 		if (*s1 != '\0' && wildcmp(s1 + 1, s2))
 			return (1);
 
-		return (wildcmp(s1, s2 + 1));
+		return (0);
 	}
 
 	if (*s1 == *s2)
