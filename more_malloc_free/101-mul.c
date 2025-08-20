@@ -4,89 +4,82 @@
 #include <ctype.h>
 
 /**
- * _strlen - Returns the length of a string
+ * is_digit - проверяет, что строка состоит только из цифр
+ * @s: строка
+ * Return: 1 если цифры, 0 иначе
  */
-int _strlen(char *s)
+int is_digit(char *s)
 {
-    int len = 0;
-    while (s[len])
-        len++;
-    return len;
-}
-
-/**
- * is_digit_string - Checks if a string contains only digits
- */
-int is_digit_string(char *s)
-{
-    int i = 0;
-    if (!s || !*s)
-        return 0;
-    while (s[i])
+    while (*s)
     {
-        if (!isdigit(s[i]))
+        if (!isdigit(*s))
             return 0;
-        i++;
+        s++;
     }
     return 1;
 }
 
 /**
- * multiply - Multiplies two numbers represented as strings
+ * main - умножает два положительных числа
+ * @argc: количество аргументов
+ * @argv: аргументы
+ * Return: 0 при успехе, 98 при ошибке
  */
-void multiply(char *num1, char *num2)
+int main(int argc, char *argv[])
 {
-    int len1 = _strlen(num1), len2 = _strlen(num2);
-    int len_result = len1 + len2;
-    int *result = calloc(len_result, sizeof(int));
-    int i, j, carry, product;
-
-    if (!result)
+    char *num1, *num2;
+    int len1, len2, len_res, i, j, carry, n1, n2, *result;
+    if (argc != 3)
     {
         printf("Error\n");
         exit(98);
     }
 
+    num1 = argv[1];
+    num2 = argv[2];
+
+    if (!is_digit(num1) || !is_digit(num2))
+    {
+        printf("Error\n");
+        exit(98);
+    }
+
+    len1 = strlen(num1);
+    len2 = strlen(num2);
+    len_res = len1 + len2;
+
+    result = malloc(sizeof(int) * len_res);
+    if (!result)
+        return 1;
+
+    for (i = 0; i < len_res; i++)
+        result[i] = 0;
+
     for (i = len1 - 1; i >= 0; i--)
     {
+        n1 = num1[i] - '0';
         carry = 0;
         for (j = len2 - 1; j >= 0; j--)
         {
-            product = (num1[i] - '0') * (num2[j] - '0') + result[i + j + 1] + carry;
-            carry = product / 10;
-            result[i + j + 1] = product % 10;
+            n2 = num2[j] - '0';
+            result[i + j + 1] += n1 * n2 + carry;
+            carry = result[i + j + 1] / 10;
+            result[i + j + 1] %= 10;
         }
         result[i + j + 1] += carry;
     }
 
-    /* Skip leading zeros */
     i = 0;
-    while (i < len_result && result[i] == 0)
+    while (i < len_res && result[i] == 0)
         i++;
 
-    if (i == len_result)
-        printf("0\n");
+    if (i == len_res)
+        printf("0");
     else
-    {
-        for (; i < len_result; i++)
+        for (; i < len_res; i++)
             printf("%d", result[i]);
-        printf("\n");
-    }
-    free(result);
-}
 
-/**
- * main - Entry point
- */
-int main(int argc, char *argv[])
-{
-    if (argc != 3 || !is_digit_string(argv[1]) || !is_digit_string(argv[2]))
-    {
-        printf("Error\n");
-        return (98);
-    }
-
-    multiply(argv[1], argv[2]);
+    printf("\n");
     free(result);
-    return (0);
+    return 0;
 }
