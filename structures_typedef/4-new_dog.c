@@ -2,6 +2,17 @@
 #include <string.h>
 #include "dog.h"
 
+/* custom function to get string length without using strlen */
+int str_len(char *s)
+{
+	int len = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	return (len);
+}
+
 /**
  * new_dog - creates a new dog
  * @name: name of the dog
@@ -20,7 +31,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 		return (NULL);
 
 	/* allocate memory for name and copy it */
-	d->name = malloc(strlen(name) + 1);
+	d->name = malloc(str_len(name) + 1);
 	if (d->name == NULL)
 	{
 		free(d);
@@ -29,7 +40,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 	strcpy(d->name, name);
 
 	/* allocate memory for owner and copy it */
-	d->owner = malloc(strlen(owner) + 1);
+	d->owner = malloc(str_len(owner) + 1);
 	if (d->owner == NULL)
 	{
 		free(d->name);
@@ -43,3 +54,4 @@ dog_t *new_dog(char *name, float age, char *owner)
 
 	return (d);
 }
+
