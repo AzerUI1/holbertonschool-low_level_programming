@@ -1,8 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
 
-/* custom function to get string length without using strlen */
+/* get string length */
 int str_len(char *s)
 {
 	int len = 0;
@@ -13,33 +12,43 @@ int str_len(char *s)
 	return (len);
 }
 
+/* copy string manually */
+void str_copy(char *dest, char *src)
+{
+	int i = 0;
+
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
+
 /**
  * new_dog - creates a new dog
  * @name: name of the dog
  * @age: age of the dog
  * @owner: owner of the dog
  *
- * Return: pointer to the new dog, or NULL if allocation fails
+ * Return: pointer to new dog, or NULL if failed
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
 	dog_t *d;
 
-	/* allocate memory for the dog */
 	d = malloc(sizeof(dog_t));
 	if (d == NULL)
 		return (NULL);
 
-	/* allocate memory for name and copy it */
 	d->name = malloc(str_len(name) + 1);
 	if (d->name == NULL)
 	{
 		free(d);
 		return (NULL);
 	}
-	strcpy(d->name, name);
+	str_copy(d->name, name);
 
-	/* allocate memory for owner and copy it */
 	d->owner = malloc(str_len(owner) + 1);
 	if (d->owner == NULL)
 	{
@@ -47,9 +56,8 @@ dog_t *new_dog(char *name, float age, char *owner)
 		free(d);
 		return (NULL);
 	}
-	strcpy(d->owner, owner);
+	str_copy(d->owner, owner);
 
-	/* set age */
 	d->age = age;
 
 	return (d);
