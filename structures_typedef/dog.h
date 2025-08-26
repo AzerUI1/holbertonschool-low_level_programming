@@ -14,10 +14,11 @@ struct dog
 	char *owner;
 };
 
-/* Function prototype */
+/* Function prototypes */
 void init_dog(struct dog *d, char *name, float age, char *owner);
 void print_dog(struct dog *d);
 
-typedef struct dog dog_t; 
-#endif /* DOG_H */
+/* New type name for struct dog */
+typedef struct dog dog_t;
 
+#endif /* DOG_H */
