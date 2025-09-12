@@ -1,5 +1,5 @@
-#ifndef HOLBERTON_H
-#define HOLBERTON_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,4 +19,4 @@ int append_text_to_file(const char *filename, char *text_content);
 void close_error(long int fd);
 void dpf_error(char *readout, char *filename, int exit_c);
 
-#endif /* HOLBERTON_H */
+#endif /* MAIN_H */
