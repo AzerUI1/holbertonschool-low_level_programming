@@ -28,10 +28,4 @@ A **doubly linked list** is a data structure where each node contains:
 
 ---
 
-## Visual Example
-
-![Nodes Example](https://www.google.com/url?sa=i&url=https%3A%2F%2Ftechvidvan.com%2Ftutorials%2Fdoubly-linked-list%2F&psig=AOvVaw3TWxyQtmEEZCSJRHFDiQBG&ust=1757756724836000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLiQ5Jv40o8DFQAAAAAdAAAAABAE)
-
----
-
 📌 Note: This folder is separate from the general C (C++) lessons README.
