@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	if (file_from < 0)
 		dpf_error("Error: Can't read from file ", argv[1], 98);
 
-	file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 00664);
+	file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (file_to < 0)
 		dpf_error("Error: Can't write to ", argv[2], 99);
 
