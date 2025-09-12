@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * close_error - helper to condense close error return to single line of code
+ * close_error - prints an error message and exits if close fails
  * @fd: file descriptor that failed to close
  */
 void close_error(long int fd)
@@ -11,9 +11,9 @@ void close_error(long int fd)
 }
 
 /**
- * dpf_error - helper to condense other error return to single line of code
- * @readout: error message describing failure
- * @filename: file that caused failure
+ * dpf_error - prints an error message and exits with given code
+ * @readout: message to print before filename
+ * @filename: file that caused the error
  * @exit_c: exit code
  */
 void dpf_error(char *readout, char *filename, int exit_c)
@@ -23,15 +23,15 @@ void dpf_error(char *readout, char *filename, int exit_c)
 }
 
 /**
- * main - entry point
- * @argc: number of arguments to main, including filename of program
- * @argv: array of strings containing arguments entered on command line
- * Return: 0 on success
+ * main - copies the content of a file to another file
+ * @argc: number of arguments
+ * @argv: array of argument strings
+ * Return: 0 on success, exits with code on error
  */
 int main(int argc, char **argv)
 {
 	long int file_from, file_to, r_bytes;
-	ssize_t w_bytes;
+	ssize_t w_bytes, total_written;
 	char buffer[1024];
 	int close_v;
 
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 		if (r_bytes < 0)
 			dpf_error("Error: Can't read from file ", argv[1], 98);
 
-		ssize_t total_written = 0;
+		total_written = 0;
 		while (total_written < r_bytes)
 		{
 			w_bytes = write(file_to, buffer + total_written, r_bytes - total_written);
@@ -59,7 +59,6 @@ int main(int argc, char **argv)
 				dpf_error("Error: Can't write to ", argv[2], 99);
 			total_written += w_bytes;
 		}
-
 	} while (r_bytes == 1024);
 
 	close_v = close(file_from);
