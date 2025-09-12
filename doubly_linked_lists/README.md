@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-README.md
-=======
-                    This is Readme file for doubly linked lists at C(pp).
->>>>>>> df83f764c6f6c6bdff610e93aa2fab3534a6aa7f
+README file for c(c++) lessons, 
+but this one is for doubly linked lists. 
+This Repo Made by Azer Aslanov. 
+At this Folder all about doubly linked lists.
