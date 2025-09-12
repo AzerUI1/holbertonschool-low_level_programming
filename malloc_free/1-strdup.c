@@ -1,33 +1,60 @@
-#include "main.h"
+#include "holberton.h"
 #include <stdlib.h>
 
 /**
- * _strdup - returns a pointer to a newly allocated copy of a string
- * @str: string to duplicate
+ * _strlen - returns the length of a string
  *
- * Return: pointer to the duplicated string, or NULL if str is NULL
- * or malloc fails
+ * @s: string to be measured
+ *
+ * Return: amount of chars in string
  */
+
+int _strlen(char *s)
+{
+	int length = 0;
+
+	for (; *s; s++)
+	{
+		length++;
+	}
+	return (length);
+}
+
+/**
+ * _strdup - returns a pointer to a newly allocated
+ * space in memory, which contains a copy of the string
+ * given as a parameter.
+ *
+ * @str: string to be copied and used to determine size of
+ * memory allocation
+ *
+ * Return: pointer to first address in the space created
+ * in memory
+ */
+
 char *_strdup(char *str)
 {
-	char *dup;
-	unsigned int i, len;
+	int size;
+	int i;
+	char *p;
+
 
 	if (str == NULL)
 		return (NULL);
+/*
+ *	if (*str == '\0')
+ *		size = 1;
+ *	else
+ */
+	size = (_strlen(str) + 1);
 
-	len = 0;
-	while (str[len] != '\0') /* calculate length of str */
-		len++;
+	p = malloc(sizeof(char) * size);
 
-	dup = malloc(sizeof(char) * (len + 1)); /* allocate memory for copy */
-	if (dup == NULL)
+	if (p == NULL)
 		return (NULL);
 
-	for (i = 0; i < len; i++)
-		dup[i] = str[i]; /* copy each character */
+	for (i = 0; i < size; i++)
+		p[i] = str[i];
 
-	dup[len] = '\0'; /* null-terminate the new string */
-
-	return (dup);
+	return (p);
 }

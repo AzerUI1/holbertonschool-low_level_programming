@@ -1,31 +1,38 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_triangle - prints a triangle of size 'size'
- * @size: size of the triangle
+ * print_triangle - draws a right triangle with hypotenuse to the left
  *
- * Description: Prints a right-aligned triangle using '#'.
- * If size is 0 or less, prints only a newline.
+ * @size: determines both base and height, in rows/columns drawn with '#' tiles
+ *
+ * Return: none
  */
+
 void print_triangle(int size)
 {
-	int row, col;
+	int row;
+	int col;
 
-	if (size <= 0)
+	if (size > 0)
 	{
-		_putchar('\n');
-		return;
-	}
-
-	for (row = 1; row <= size; row++)
-	{
-		for (col = 1; col <= size; col++)
+		for (row = 0; row < size; row++)
 		{
-			if (col <= size - row)
-				_putchar(' ');
-			else
-				_putchar('#');
+			for (col = 0; col < size; col++)
+			{
+				if ((row + col) < (size - 1))
+				{
+					_putchar(' ');
+				}
+				else
+				{
+					_putchar('#');
+				}
+			}
+			_putchar('\n');
 		}
+	}
+	else
+	{
 		_putchar('\n');
 	}
 }

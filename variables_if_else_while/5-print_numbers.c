@@ -1,19 +1,18 @@
 #include <stdio.h>
 
 /**
- * main - Prints digits from 0 to 9
+ * main - entry point
  *
- * Return: Always 0 (Success)
+ * Return: return 0 to complete
  */
 int main(void)
 {
-	short n = 0;
+	int i;
 
-	while (n < 10)
+	for (i = 0; i < 10; i++)
 	{
-		printf("%d", n);
-		n++;
+		printf("%i", i);
 	}
-	printf("\n");
+	putchar('\n');
 	return (0);
 }

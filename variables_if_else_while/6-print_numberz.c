@@ -1,19 +1,18 @@
 #include <stdio.h>
 
 /**
- * main - Prints digits from 0 to 9
+ * main - entry point
  *
- * Return: Always 0 (Success)
+ * Return: return 0 to complete
  */
 int main(void)
 {
-	short n = 0;
+	int i;
 
-	while (n < 10)
+	for (i = 48; i < 58; i++)
 	{
-		putchar(n + '0'); /* convert digit to char */
-		n++;
+		putchar(i + 0);
 	}
-	putchar('\n'); /* print newline */
+	putchar('\n');
 	return (0);
 }

@@ -1,27 +1,27 @@
+#include "holberton.h"
 #include <stdlib.h>
-#include "main.h"
 
 /**
  * _realloc - reallocates a memory block using malloc and free
- * @ptr: pointer to previously allocated memory
- * @old_size: size of allocated space for ptr
- * @new_size: new size of the memory block
  *
- * Return: pointer to reallocated memory
- * If new_size == old_size, return ptr
- * If ptr is NULL, treat as malloc(new_size)
- * If new_size == 0 and ptr != NULL, free(ptr) and return NULL
+ * @ptr: pointer to the memory previously allocated malloc(old_size)
+ *
+ * @old_size: preivous size in bytes of memory allocated to ptr
+ *
+ * @new_size: new size in bytes of memory to be allocated to ptr
+ *
+ * Return: pointer to the resized area of memory, NULL if either
+ * min is greater than max, or if malloc fails
  */
+
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *new_ptr, *old_ptr;
-	unsigned int i, min_size;
+	unsigned int i;
+	char *src = ptr;
+	char *dest;
 
 	if (new_size == old_size)
 		return (ptr);
-
-	if (ptr == NULL)
-		return (malloc(new_size));
 
 	if (new_size == 0 && ptr != NULL)
 	{
@@ -29,17 +29,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (NULL);
 	}
 
-	new_ptr = malloc(new_size);
-	if (new_ptr == NULL)
+	if (ptr == NULL)
+	{
+		ptr = malloc(new_size);
+		return (ptr);
+	}
+
+	dest = malloc(sizeof(char) * new_size);
+	if (dest == NULL)
 		return (NULL);
 
-	old_ptr = ptr;
-	min_size = (old_size < new_size) ? old_size : new_size;
-
-	for (i = 0; i < min_size; i++)
-		new_ptr[i] = old_ptr[i];
+	for (i = 0; i < old_size; i++)
+		dest[i] = src[i];
 
 	free(ptr);
-
-	return (new_ptr);
+	return ((void *)dest);
 }

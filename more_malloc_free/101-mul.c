@@ -1,85 +1,149 @@
-#include <stdio.h>
+#include "holberton.h"
+/* malloc free */
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+
 
 /**
- * is_digit - проверяет, что строка состоит только из цифр
- * @s: строка
- * Return: 1 если цифры, 0 иначе
+ * initDigitArray - allocates and sets to 0 an array to contain the digits
+ *   of a base 10 number
+ *
+ * @size: array size
+ * Return: pointer to initialized array, or NULL on failure
  */
-int is_digit(char *s)
+unsigned int *initDigitArray(size_t size)
 {
-    while (*s)
-    {
-        if (!isdigit(*s))
-            return 0;
-        s++;
-    }
-    return 1;
+	unsigned int *arr = NULL;
+	size_t i;
+
+	arr = malloc(sizeof(unsigned int) * size);
+	if (!arr)
+		return (NULL);
+
+	for (i = 0; i < size; i++)
+		arr[i] = 0;
+
+	return (arr);
 }
 
+
 /**
- * main - умножает два положительных числа
- * @argc: количество аргументов
- * @argv: аргументы
- * Return: 0 при успехе, 98 при ошибке
+ * stringIntMultiply - TBD
+ *
+ * @prod_digits: array to store digits of product
+ * @n1_digits: string containing multiplicand digits in ASCII
+ * @n2_digits: string containing multiplier digits in ASCII
+ * @n1_len: amount of digits in multiplicand
+ * @n2_len: amount of digits in multiplier
  */
-int main(int argc, char *argv[])
+void stringIntMultiply(unsigned int *prod_digits, char *n1_digits,
+		       char *n2_digits, size_t n1_len, size_t n2_len)
 {
-    char *num1, *num2;
-    int len1, len2, len_res, i, j, carry, n1, n2, *result;
-    if (argc != 3)
-    {
-        printf("Error\n");
-        exit(98);
-    }
+	int i, j, sum;
+	unsigned char digit1, digit2;
 
-    num1 = argv[1];
-    num2 = argv[2];
+	if (prod_digits == NULL || n1_digits == NULL || n2_digits == NULL)
+		return;
 
-    if (!is_digit(num1) || !is_digit(num2))
-    {
-        printf("Error\n");
-        exit(98);
-    }
+	for (i = n1_len - 1; i >= 0; i--)
+	{
+		sum = 0;
+		digit1 = n1_digits[i] - '0';
 
-    len1 = strlen(num1);
-    len2 = strlen(num2);
-    len_res = len1 + len2;
+		for (j = n2_len - 1; j >= 0; j--)
+		{
+			digit2 = n2_digits[j] - '0';
 
-    result = malloc(sizeof(int) * len_res);
-    if (!result)
-        return 1;
+			sum += prod_digits[i + j + 1] + (digit1 * digit2);
 
-    for (i = 0; i < len_res; i++)
-        result[i] = 0;
+			prod_digits[i + j + 1] = sum % 10;
 
-    for (i = len1 - 1; i >= 0; i--)
-    {
-        n1 = num1[i] - '0';
-        carry = 0;
-        for (j = len2 - 1; j >= 0; j--)
-        {
-            n2 = num2[j] - '0';
-            result[i + j + 1] += n1 * n2 + carry;
-            carry = result[i + j + 1] / 10;
-            result[i + j + 1] %= 10;
-        }
-        result[i + j + 1] += carry;
-    }
+			sum /= 10;
+		}
 
-    i = 0;
-    while (i < len_res && result[i] == 0)
-        i++;
+		if (sum > 0)
+			prod_digits[i + j + 1] += sum;
+	}
+}
 
-    if (i == len_res)
-        printf("0");
-    else
-        for (; i < len_res; i++)
-            printf("%d", result[i]);
 
-    printf("\n");
-    free(result);
-    return 0;
+/**
+ * stringIsPosInt - validates if string represents a positive integer
+ *
+ * @s: string to test
+ * Return: 1 if true, 0 if false
+ */
+int stringIsPosInt(char *s)
+{
+	size_t i;
+
+	for (i = 0; s[i]; i++)
+	{
+		if (s[i] < '0' || s[i] > '9')
+			return (0);
+	}
+
+	return (1);
+}
+
+
+/**
+ * error - error return
+ *
+ * @status: error code to exit with
+ */
+void error(int status)
+{
+	_putchar('E');
+	_putchar('r');
+	_putchar('r');
+	_putchar('o');
+	_putchar('r');
+	_putchar('\n');
+	exit(status);
+}
+
+
+/**
+ * main - entry point
+ *
+ * @argc: number of commmand line arguments
+ * @argv: array of commmand line arguments
+ * Return: 0 on success, 98 on failure
+ */
+int main(int argc, char **argv)
+{
+	size_t i, av1_len, av2_len, prod_len;
+	unsigned int *prod_digits = NULL;
+
+	if (argc != 3 || !stringIsPosInt(argv[1]) ||
+	    !stringIsPosInt(argv[2]))
+		error(98);
+
+	for (i = 0, av1_len = 0; argv[1][i]; i++)
+		av1_len++;
+
+	for (i = 0, av2_len = 0; argv[2][i]; i++)
+		av2_len++;
+
+	prod_len = av1_len + av2_len;
+	prod_digits = initDigitArray(prod_len);
+	if (prod_digits == NULL)
+		error(98);
+
+	stringIntMultiply(prod_digits, argv[1], argv[2], av1_len, av2_len);
+
+	/* omit leading zeroes */
+	for (i = 0; !prod_digits[i] && i < prod_len; i++)
+	{}
+
+	if (i == prod_len)
+		_putchar('0');
+
+	for (; i < prod_len; i++)
+		_putchar(prod_digits[i] + '0');
+	_putchar('\n');
+
+	free(prod_digits);
+
+	return (0);
 }

@@ -1,32 +1,39 @@
-#include "main.h"
+#include "holberton.h"
+#include <stdio.h>
 
 /**
- * prime_helper - checks if n is divisible by divisor
- * @n: number to check
- * @divisor: current divisor
+ * find_pr - recursive helper of is_prime_number, adds second variable
+ * to increment factors to compare against n
  *
- * Return: 1 if prime, 0 if not
+ * @div: sucessive candidates for factors of n
+ *
+ * @n: number to be checked for prime
+ *
+ * Return: 1 if n is prime, or 0 if not
  */
-int prime_helper(int n, int divisor)
+
+int find_pr(int div, int n)
 {
-	if (n % divisor == 0)
-		return (0);
-	if (divisor * divisor > n)
+	if (div == 1)
 		return (1);
-	return (prime_helper(n, divisor + 1));
+	else if (n % div == 0)
+		return (0);
+	else
+		return (find_pr(div - 1, n));
 }
 
 /**
- * is_prime_number - checks if a number is prime
- * @n: number
+ * is_prime_number - tests if n is prime through a recursive helper
  *
- * Return: 1 if prime, 0 otherwise
+ * @n: number to be checked for prime
+ *
+ * Return: 1 if n is prime, or 0 if not
  */
+
 int is_prime_number(int n)
 {
-	if (n <= 1)
+	if (n < 2)
 		return (0);
-	if (n == 2)
-		return (1);
-	return (prime_helper(n, 2));
+	else
+		return (find_pr((n / 2), n));
 }

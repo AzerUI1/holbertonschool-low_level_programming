@@ -1,11 +1,15 @@
-#include "main.h"
+#include "holberton.h"
+#include <stdio.h>
 
 /**
- * factorial - returns the factorial of a given number
- * @n: input number
+ * factorial - finds factorial of int n.
+ * if n is less than 0, return -1 for error
  *
- * Return: factorial of n, -1 if n < 0
+ * @n: base number to derive factorial
+ *
+ * Return: factorial of n, or -1 if n < 0
  */
+
 int factorial(int n)
 {
 	if (n < 0)

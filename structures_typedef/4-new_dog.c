@@ -1,80 +1,101 @@
-#include <stdlib.h>
 #include "dog.h"
+#include <stdlib.h>
+
+int _strlen(char *s);
+char *_strdup(char *str);
 
 /**
- * str_len - returns the length of a string
- * @s: pointer to the string
+ * new_dog - creates a new struct of type dog
  *
- * Return: length of the string
- */
-int str_len(char *s)
-{
-	int len = 0;
-
-	while (s[len] != '\0')
-		len++;
-
-	return (len);
-}
-
-/**
- * str_copy - copies a string from src to dest
- * @dest: destination buffer
- * @src: source string
+ * @name: string for dog name passed to new struct
  *
- * Return: void
- */
-void str_copy(char *dest, char *src)
-{
-	int i = 0;
-
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-}
-
-/**
- * new_dog - creates a new dog
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
+ * @age: float for dog age passed to new struct
  *
- * Return: pointer to new dog, or NULL if memory allocation fails
+ * @owner: string for owner passed to new struct
+ *
+ * Return: pointer to new dog struct, or NULL if function fails
  */
+
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *d;
+	char *nd_name;
+	char *nd_owner;
+	struct dog *nd;
 
-	/* allocate memory for dog struct */
-	d = malloc(sizeof(dog_t));
-	if (d == NULL)
+	nd = malloc(sizeof(struct dog));
+	if (nd == NULL)
 		return (NULL);
 
-	/* allocate memory and copy name */
-	d->name = malloc(str_len(name) + 1);
-	if (d->name == NULL)
+	nd_name = _strdup(name);
+	if (nd_name == NULL)
 	{
-		free(d);
+		free(nd);
 		return (NULL);
 	}
-	str_copy(d->name, name);
 
-	/* allocate memory and copy owner */
-	d->owner = malloc(str_len(owner) + 1);
-	if (d->owner == NULL)
+	nd_owner = _strdup(owner);
+	if (nd_owner == NULL)
 	{
-		free(d->name);
-		free(d);
+		free(nd_name);
+		free(nd);
 		return (NULL);
 	}
-	str_copy(d->owner, owner);
 
-	/* set age */
-	d->age = age;
+	nd->name = nd_name;
+	nd->age = age;
+	nd->owner = nd_owner;
 
-	return (d);
+	return (nd);
 }
 
+/**
+ * _strlen - returns the length of a string
+ *
+ * @s: string to be measured
+ *
+ * Return: amount of chars in string
+ */
+
+int _strlen(char *s)
+{
+	int length = 0;
+
+	for (; *s; s++)
+	{
+		length++;
+	}
+	return (length);
+}
+
+/**
+ * _strdup - returns a pointer to a newly allocated
+ * space in memory, which contains a copy of the string
+ * given as a parameter.
+ *
+ * @str: string to be copied and used to determine size of
+ * memory allocation
+ *
+ * Return: pointer to first address in the space created
+ * in memory
+ */
+
+char *_strdup(char *str)
+{
+	int size;
+	int i;
+	char *p;
+
+	if (str == NULL)
+		return (NULL);
+
+	size = (_strlen(str) + 1);
+
+	p = malloc(sizeof(char) * size);
+	if (p == NULL)
+		return (NULL);
+
+	for (i = 0; i < size; i++)
+		p[i] = str[i];
+
+	return (p);
+}

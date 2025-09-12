@@ -1,30 +1,43 @@
-#include "main.h"
+#include "holberton.h"
+#include <stdio.h>
 
 /**
- * sqrt_helper - helper to find square root recursively
- * @n: number to find square root of
- * @i: current guess
+ * find_sq - recursive helper of _sqrt_recursion, adds second variable to
+ * increment guesses to compare against n
  *
- * Return: natural square root or -1 if not found
+ * @guess: sucessive candidates for square root of n
+ *
+ * @n: number to be checked for root
+ *
+ * Return: natural sqaure root of n, or -1 if none found
  */
-int sqrt_helper(int n, int i)
+
+int find_sq(int guess, int n)
 {
-	if (i * i > n)
+	if (guess * guess == n)
+		return (guess);
+	else if (guess * guess < n)
+		return (find_sq(guess + 1, n));
+	else
 		return (-1);
-	if (i * i == n)
-		return (i);
-	return (sqrt_helper(n, i + 1));
 }
 
 /**
- * _sqrt_recursion - returns the natural square root of a number
- * @n: number
+ * _sqrt_recursion - finds natural square root of n through recursive helper
  *
- * Return: square root, or -1 if not natural square root
+ * @n: number to be checked
+ *
+ * Return: natural sqaure root of n, or -1 if none found
  */
+
 int _sqrt_recursion(int n)
 {
 	if (n < 0)
 		return (-1);
-	return (sqrt_helper(n, 0));
+	else if (n == 0)
+		return (0);
+	else if (n == 1)
+		return (1);
+	else
+		return (find_sq(2, n));
 }

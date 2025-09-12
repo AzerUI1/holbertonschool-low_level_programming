@@ -1,42 +1,55 @@
-#include "main.h"
+#include "holberton.h"
 #include <stdlib.h>
 
 /**
- * alloc_grid - returns a pointer to a 2 dimensional array of integers
- * @width: width of the grid
- * @height: height of the grid
+ * alloc_grid - returns a pointer to a 2 dimensional array
+ * of integers.
  *
- * Return: pointer to the 2D array, or NULL on failure or invalid size
+ * @width: amount of members of of each array that is a member
+ * of height, also amount of values printed in each row
+ *
+ * @height: amount of arrays arrayed to int**, also amount of
+ * values printed in each column
+ *
+ * Return: pointer to a 2 dimensional array of integers,
+ * or NULL if either width or height is < 0
  */
+
 int **alloc_grid(int width, int height)
 {
-	int **grid;
-	int i, j;
+	int i;
+	int j;
+	int k;
+	int **p;
 
-	if (width <= 0 || height <= 0)
+	if (width < 1 || height < 1)
+		return (NULL);
+/* allocate space for array of height number single pointers */
+	p = malloc(sizeof(int *) * height);
+	if (p == NULL)
 		return (NULL);
 
-	grid = malloc(sizeof(int *) * height);
-	if (grid == NULL)
-		return (NULL);
-
+/* allocate space for height number arrays of width number members each */
 	for (i = 0; i < height; i++)
 	{
-		grid[i] = malloc(sizeof(int) * width);
-		if (grid[i] == NULL)
+		p[i] = malloc(sizeof(int) * width);
+		if (p[i] == NULL)
 		{
-			while (i > 0)
+/* if any 2nd dimension allocation returns an error, avoid memory leak */
+			for (k = 0; k < i; k++)
 			{
-				i--;
-				free(grid[i]);
+/* by freeing up memory allocated in any previous step for dimension height */
+				free(p[k]);
 			}
-			free(grid);
+/* then freeing the height-sized array of pointers in the second dimension */
+			free(p);
 			return (NULL);
 		}
 		for (j = 0; j < width; j++)
-			grid[i][j] = 0; /* initialize each element to 0 */
+		{
+			p[i][j] = 0;
+		}
 	}
 
-	return (grid);
+	return (p);
 }
-

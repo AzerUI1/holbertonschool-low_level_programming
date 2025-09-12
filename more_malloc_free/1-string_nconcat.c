@@ -1,53 +1,74 @@
+#include "holberton.h"
 #include <stdlib.h>
-#include "main.h"
+#include <stdio.h>
+/**
+ * _strlen - returns the length of a string, modifed return
+ *
+ * @s: string to be measured
+ *
+ * Return: amount of chars in string, in this use unsigned int
+ */
+
+int _strlen(char *s)
+{
+	int length = 0;
+
+	for (; *s; s++)
+	{
+		length++;
+	}
+	return (length);
+}
 
 /**
- * string_nconcat - concatenates two strings
- * @s1: first string
- * @s2: second string
- * @n: maximum number of bytes from s2 to concatenate
+ * string_nconcat - concatenates two strings, result contains
+ * s1, followed by the first n bytes of s2, and null terminated
  *
- * Return: pointer to newly allocated string,
- * or NULL if allocation fails
+ * @s1: first string copied
+ *
+ * @s2: second string copied
+ *
+ * @n: amount of bytes in s2 copied
+ *
+ * Return: pointer to the concatenated string, or NULL pointer
+ * if the function fails
  */
+
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *ptr;
-	unsigned int i, j, len1, len2, size;
+	int len1;
+	int len2;
+	int sign_n = n;
+	int i;
+	char *cnct;
 
-	/* treat NULL as empty string */
 	if (s1 == NULL)
-		s1 = "";
+		len1 = 0;
+	else
+		len1 = _strlen(s1);
+
 	if (s2 == NULL)
-		s2 = "";
+		len2 = 0;
+	else if (sign_n > _strlen(s2))
+		len2 = _strlen(s2);
+	else
+		len2 = n;
 
-	/* find lengths of s1 and s2 */
-	len1 = 0;
-	while (s1[len1] != '\0')
-		len1++;
-	len2 = 0;
-	while (s2[len2] != '\0')
-		len2++;
+	cnct = malloc(sizeof(char) * ((len1 + len2) + 1));
 
-	/* if n >= len2, use whole s2 */
-	if (n >= len2)
-		n = len2;
-
-	size = len1 + n + 1;
-
-	ptr = malloc(size * sizeof(char));
-	if (ptr == NULL)
+	if (cnct == NULL)
 		return (NULL);
 
-	/* copy s1 into ptr */
 	for (i = 0; i < len1; i++)
-		ptr[i] = s1[i];
+	{
+		cnct[i] = s1[i];
+	}
+	for (i = 0; i < len2; i++)
+	{
+		cnct[len1 + i] = s2[i];
+	}
 
-	/* copy first n chars of s2 */
-	for (j = 0; j < n; j++)
-		ptr[i + j] = s2[j];
+	cnct[len1 + len2] = '\0';
 
-	ptr[i + j] = '\0';
-
-	return (ptr);
+	return (cnct);
 }

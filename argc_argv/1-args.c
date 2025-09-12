@@ -1,37 +1,28 @@
-#include "main.h"
+#include <stdio.h>
 
 /**
- * main - prints the number of arguments passed into the program
- * @argc: number of arguments
- * @argv: array of arguments
+ * main - entry point, prints amount of arguments to program
  *
- * Return: Always 0
+ * @argc: amount of cmd line arguments, starting with program name itself
+ *
+ * @argv: array of strings containing cmd line arguments
+ *
+ * Return: 0
  */
+
 int main(int argc, char *argv[])
 {
-	int num = argc - 1;
-	int div = 1;
-	int digit;
-	(void)argv;
-
-	if (num == 0)
-	{
-		_putchar('0');
-		_putchar('\n');
-		return (0);
-	}
-
-	while (num / div >= 10)
-		div *= 10;
-
-	while (div > 0)
-	{
-		digit = num / div;
-		_putchar(digit + '0');
-		num %= div;
-		div /= 10;
-	}
-	_putchar('\n');
-
+/*
+ * Originally needed to express argc as pointer arithmetic due to
+ * strictest gcc flags requiring 0 or 2 arguments to main(), and not
+ * allowing an unused argument to main.
+ * First cleared checks with:
+ *	int n = (((argv + argc) - argv) - 1);
+ *	printf("%d\n", n);
+ *
+ * Then remembered the introduction of how to void a variable, so:
+ */
+	(void)*argv;
+	printf("%d\n", (argc - 1));
 	return (0);
 }

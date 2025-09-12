@@ -1,26 +1,31 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_square - Prints a square using the character '#'
- * @size: The size of the square
+ * print_square - draws a diagonal line on the terminal
  *
- * Description: If size <= 0, prints only a newline.
+ * @size: determines length of square drawn in block of '#' tiles
+ *
+ * Return: none
  */
+
 void print_square(int size)
 {
-	int i, j;
+	int width;
+	int height;
 
-	if (size <= 0)
+	if (size > 0)
 	{
-		_putchar('\n');
-		return;
+		for (height = 0; height < size; height++)
+		{
+			for (width = 0; width < size; width++)
+			{
+				_putchar('#');
+			}
+			_putchar('\n');
+		}
 	}
-
-	for (i = 0; i < size; i++)
+	else
 	{
-		for (j = 0; j < size; j++)
-			_putchar('#');
-
 		_putchar('\n');
 	}
 }

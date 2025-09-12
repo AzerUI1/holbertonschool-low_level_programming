@@ -1,73 +1,46 @@
-#include "main.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * print_number - prints an integer using _putchar
- * @n: number to print
- */
-void print_number(int n)
-{
-	int div = 1, digit;
-
-	if (n == 0)
-	{
-		_putchar('0');
-		_putchar('\n');
-		return;
-	}
-
-	while (n / div >= 10)
-		div *= 10;
-
-	while (div > 0)
-	{
-		digit = n / div;
-		_putchar(digit + '0');
-		n %= div;
-		div /= 10;
-	}
-	_putchar('\n');
-}
-
-/**
- * main - prints minimum number of coins to make change
- * @argc: number of arguments
- * @argv: array of arguments
+ * main - entry point, prints mininum amount of coins needed,
+ * prints error if too many arguments, 0 if negative number given
  *
- * Return: 0 if success, 1 if error
+ * @argc: amount of cmd line arguments, starting with program
+ * name itself
+ *
+ * @argv: array of strings containing cmd line arguments
+ *
+ * Return: 0 if amount given is positive or negative integer, 1 if
+ * incorrect number of arguments
  */
+
 int main(int argc, char *argv[])
 {
-	int cents, coins = 0;
-	int coin_values[] = {25, 10, 5, 2, 1};
 	int i;
+	int change;
+	int min_coins = 0;
+/* note that the European 2-cent coin is named in instructions */
+	int denom[] = {25, 10, 5, 2, 1};
 
 	if (argc != 2)
 	{
-		_putchar('E');
-		_putchar('r');
-		_putchar('r');
-		_putchar('o');
-		_putchar('r');
-		_putchar('\n');
+		printf("Error\n");
 		return (1);
 	}
-
-	cents = atoi(argv[1]);
-	if (cents < 0)
+	else if (atoi(argv[1]) < 0)
 	{
-		_putchar('0');
-		_putchar('\n');
+		printf("0\n");
 		return (0);
 	}
-
-	for (i = 0; i < 5; i++)
+	else
 	{
-		coins += cents / coin_values[i];
-		cents %= coin_values[i];
+		change = atoi(argv[1]);
+		for (i = 0; i < 5; i++)
+		{
+			min_coins += (change / denom[i]);
+			change -= ((change / denom[i]) * denom[i]);
+		}
 	}
-
-	print_number(coins);
-
+	printf("%d\n", min_coins);
 	return (0);
 }

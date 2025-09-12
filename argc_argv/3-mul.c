@@ -1,92 +1,30 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
- * _atoi - converts a string to an integer
- * @s: string to convert
+ * main - entry point, multiplies two numbers, returns 1 and prints
+ * "Error" if not receiving 2 arguments
  *
- * Return: integer value
- */
-int _atoi(char *s)
-{
-	int i = 0, sign = 1, num = 0;
-
-	if (!s)
-		return (0);
-
-	if (s[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-
-	for (; s[i] != '\0'; i++)
-	{
-		num = num * 10 + (s[i] - '0');
-	}
-
-	return (num * sign);
-}
-
-/**
- * print_number - prints an integer using _putchar
- * @n: number to print
- */
-void print_number(int n)
-{
-	int div = 1;
-	int digit;
-
-	if (n == 0)
-	{
-		_putchar('0');
-		_putchar('\n');
-		return;
-	}
-
-	if (n < 0)
-	{
-		_putchar('-');
-		n = -n;
-	}
-
-	while (n / div >= 10)
-		div *= 10;
-
-	while (div > 0)
-	{
-		digit = n / div;
-		_putchar(digit + '0');
-		n %= div;
-		div /= 10;
-	}
-	_putchar('\n');
-}
-
-/**
- * main - multiplies two numbers passed as arguments
- * @argc: number of arguments
- * @argv: array of arguments
+ * @argc: amount of cmd line arguments, starting with program name itself
  *
- * Return: 0 if success, 1 if error
+ * @argv: array of strings containing cmd line arguments
+ *
+ * Return: 0 on sucess, 1 if incorrect number of arguments
  */
+
 int main(int argc, char *argv[])
 {
-	int a, b;
+	int prod;
 
 	if (argc != 3)
 	{
-		_putchar('E');
-		_putchar('r');
-		_putchar('r');
-		_putchar('o');
-		_putchar('r');
-		_putchar('\n');
+		printf("Error\n");
 		return (1);
 	}
-
-	a = _atoi(argv[1]);
-	b = _atoi(argv[2]);
-	print_number(a * b);
-
-	return (0);
+	else
+	{
+		prod = (atoi(argv[1]) * atoi(argv[2]));
+		printf("%d\n", prod);
+		return (0);
+	}
 }

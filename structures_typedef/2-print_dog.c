@@ -1,28 +1,29 @@
-#include <stdio.h>
 #include "dog.h"
+#include <stdio.h>
 
 /**
- * print_dog - prints a struct dog
- * @d: pointer to struct dog
+ * print_dog - prints a struct type dog
  *
- * Description: prints name, age, and owner of the dog.
- * If an element is NULL, prints (nil) instead.
- * If d is NULL, prints nothing.
+ * @d: pointer to struct type dog
+ *
+ * Return: void
  */
+
 void print_dog(struct dog *d)
 {
 	if (d == NULL)
 		return;
-
+	printf("Name: ");
 	if (d->name == NULL)
-		printf("Name: (nil)\n");
+		printf("(nil)\n");
 	else
-		printf("Name: %s\n", d->name);
+		printf("%s\n", d->name);
 
 	printf("Age: %f\n", d->age);
 
+	printf("Owner: ");
 	if (d->owner == NULL)
-		printf("Owner: (nil)\n");
+		printf("(nil)\n");
 	else
-		printf("Owner: %s\n", d->owner);
+		printf("%s\n", d->owner);
 }

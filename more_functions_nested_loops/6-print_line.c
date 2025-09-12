@@ -1,23 +1,23 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_line - Draws a straight line in the terminal using '_'
- * @n: Number of times the character '_' should be printed
+ * print_line - draws a straight line in the terminal
  *
- * Description: If n <= 0, prints only a newline.
+ * @n: input number, determines length of line in '_' segments
+ *
+ * Return: none
  */
+
 void print_line(int n)
 {
-	int i;
+	int segment;
 
-	if (n <= 0)
+	if (n > 0)
 	{
-		_putchar('\n');
-		return;
+		for (segment = 0; segment < n; segment++)
+		{
+			_putchar('_');
+		}
 	}
-
-	for (i = 0; i < n; i++)
-		_putchar('_');
-
 	_putchar('\n');
 }

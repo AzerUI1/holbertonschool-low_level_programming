@@ -1,27 +1,32 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_diagonal - Draws a diagonal line on the terminal using '\'
- * @n: Number of times the character '\' should be printed
+ * print_diagonal - draws a diagonal line on the terminal
  *
- * Description: If n <= 0, prints only a newline.
+ * @n: input number, determines length of "hypotenuse" in '\' segments
+ *
+ * Return: none
  */
+
 void print_diagonal(int n)
 {
-	int i, j;
+	int segment;
+	int offset;
 
-	if (n <= 0)
+	if (n > 0)
 	{
-		_putchar('\n');
-		return;
+		for (segment = 0; segment < n; segment++)
+		{
+			for (offset = 0; offset < segment; offset++)
+			{
+				_putchar(' ');
+			}
+			_putchar('\\');
+			_putchar('\n');
+		}
 	}
-
-	for (i = 0; i < n; i++)
+	else
 	{
-		for (j = 0; j < i; j++)
-			_putchar(' ');
-
-		_putchar('\\');
 		_putchar('\n');
 	}
 }

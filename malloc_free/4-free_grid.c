@@ -1,22 +1,25 @@
-#include "main.h"
+#include "holberton.h"
 #include <stdlib.h>
 
 /**
- * free_grid - frees a 2 dimensional grid previously created
- * @grid: pointer to the 2D array
- * @height: height of the grid
+ * free_grid - frees memory allocated to a 2 dimensional array
+ * previously created by the alloc_grid function
  *
- * Return: Nothing
+ * @grid: pointer to 2 dimensional array created by alloc_grid
+ *
+ * @height: amount of arrays arrayed to grid**, also amount of
+ * values printed in each column
+ *
+ * Return: void
  */
+
 void free_grid(int **grid, int height)
 {
 	int i;
 
-	if (grid == NULL)
-		return;
-
 	for (i = 0; i < height; i++)
-		free(grid[i]); /* free each row */
-
-	free(grid); /* free the array of pointers */
+	{
+		free(grid[i]);
+	}
+	free(grid);
 }
