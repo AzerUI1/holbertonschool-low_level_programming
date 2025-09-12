@@ -4,7 +4,6 @@
  * close_error - helper to condense close error return to single line of code
  * @fd: file descriptor that failed to close
  */
-
 void close_error(long int fd)
 {
 	dprintf(STDERR_FILENO, "Error: Can't close fd %li\n", fd);
@@ -17,7 +16,6 @@ void close_error(long int fd)
  * @filename: file that caused failure
  * @exit_c: exit code
  */
-
 void dpf_error(char *readout, char *filename, int exit_c)
 {
 	dprintf(STDERR_FILENO, "%s%s\n", readout, filename);
@@ -30,15 +28,10 @@ void dpf_error(char *readout, char *filename, int exit_c)
  * @argv: array of strings containing arguments entered on command line
  * Return: 0 on success
  */
-
-/*
- * open(,,mode) arg written numerically to avoid line width overrun.
- * 00664 = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
- */
-
 int main(int argc, char **argv)
 {
-	long int file_from, file_to, r_bytes, w_bytes;
+	long int file_from, file_to, r_bytes;
+	ssize_t w_bytes;
 	char buffer[1024];
 	int close_v;
 
@@ -58,9 +51,14 @@ int main(int argc, char **argv)
 		if (r_bytes < 0)
 			dpf_error("Error: Can't read from file ", argv[1], 98);
 
-		w_bytes = write(file_to, buffer, r_bytes);
-		if (w_bytes < r_bytes)
-			dpf_error("Error: Can't write to ", argv[2], 99);
+		ssize_t total_written = 0;
+		while (total_written < r_bytes)
+		{
+			w_bytes = write(file_to, buffer + total_written, r_bytes - total_written);
+			if (w_bytes < 0)
+				dpf_error("Error: Can't write to ", argv[2], 99);
+			total_written += w_bytes;
+		}
 
 	} while (r_bytes == 1024);
 
@@ -73,3 +71,4 @@ int main(int argc, char **argv)
 
 	return (0);
 }
+
